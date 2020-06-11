@@ -83,8 +83,7 @@ has following permissions for actions.
 2. post:movies, post:actors
 3. patch:movies, patch:actors
 4. delete:movies, delete:actors
-<<<<<<< HEAD
-=======
+
 
 ## Authentication (bearer tokens)
 
