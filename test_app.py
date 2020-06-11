@@ -181,9 +181,3 @@ class TriviaTestCase(unittest.TestCase):
         self.assertEqual(data['code'], 'unauthorized')
         self.assertEqual(data['description'], 'Permission not found')
 
-
-
- 
-
-
-

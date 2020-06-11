@@ -171,3 +171,10 @@ or
 - 500: Internal Sever Error
 
 >>>>>>> 1505d77ad60c6a2259d242825d5380448d33c6ff
+
+## Endpoints
+- GET /movies
+- - General: Retrieve all movies.
+- - Permission: Casting Assistant, Casting Director, Executive Producer
+- - Request Arguments: JWT token.
+- Return: success value and a dictionary of movies.
