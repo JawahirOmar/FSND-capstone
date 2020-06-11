@@ -68,21 +68,21 @@ The Casting Agency models a company that is responsible for creating movies and 
 ### Roles
 - Casting Assistant
 has following permissions for actions.
-1. get:movies, get:actors
+  - get:movies, get:actors
 
 - Casting Director
 has following permissions for actions.
-1. get:movies, get:actors
-2. post:actors, delete:actors
-3. patch:movies, patch:actors
+  - get:movies, get:actors
+  - post:actors, delete:actors
+  - patch:movies, patch:actors
 
 
 - Executive Producer
 has following permissions for actions.
-1. get:movies, get:actors
-2. post:movies, post:actors
-3. patch:movies, patch:actors
-4. delete:movies, delete:actors
+  - get:movies, get:actors
+  - post:movies, post:actors
+  - patch:movies, patch:actors
+  - delete:movies, delete:actors
 
 
 ## Authentication (bearer tokens)
