@@ -5,9 +5,12 @@ from sqlalchemy import Column, String, Integer, create_engine
 
 
 database_name = "agency"
-# database_path = "postgres://{}:{}@{}/{}".format('postgres', '90', 'localhost:5432', database_name)
-database_path = "postgres://{}/{}".format('localhost:5432', database_name)
+# database_path = "postgres://{}/{}".format('localhost:5432', database_name)
+database_path = "postgres://{}:{}@{}/{}".format(
+    'postgres', 90, 'localhost:5432', database_name)
+
 db = SQLAlchemy()
+
 '''
 setup_db(app)
     binds a flask application and a SQLAlchemy service
