@@ -2,11 +2,12 @@ import os
 from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
 from sqlalchemy import Column, String, Integer, create_engine
+
+
 database_name = "agency"
 # database_path = "postgres://{}:{}@{}/{}".format('postgres', '90', 'localhost:5432', database_name)
 database_path = "postgres://{}/{}".format('localhost:5432', database_name)
 db = SQLAlchemy()
-
 '''
 setup_db(app)
     binds a flask application and a SQLAlchemy service
@@ -15,11 +16,9 @@ setup_db(app)
 def setup_db(app, database_path=database_path):
     app.config["SQLALCHEMY_DATABASE_URI"] = database_path
     app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
-    db = SQLAlchemy(app)
-    migrate = Migrate(app, db)
     db.app = app
     db.init_app(app)
-    # db.create_all()
+    db.create_all()
 
 
 class Movie(db.Model):
