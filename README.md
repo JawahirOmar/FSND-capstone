@@ -56,34 +56,33 @@ The --reload flag will detect file changes and restart the server automatically.
 The Casting Agency models a company that is responsible for creating movies and managing and assigning actors to those movies. You are an Executive Producer within the company and are creating a system to simplify and streamline your process.
 
 ### Data Models
-Movie with attributes title and release date
-Actor with attributes name, age and gender
-Casting with attributes actor_id and movie_id
+- Movies with attributes title and release date
+- Actors with attributes name, age and gender
 
 ### Endpoints
-- GET /actors, /movies and /casting
-- POST /actors, /movies and /casting
-- PATCH /actors, /movies/ and /casting
-- DELETE /actors, /movies/ and /casting
+- GET /actors and /movies
+- DELETE /actors/ and /movies/
+- POST /actors and /movies and
+- PATCH /actors/ and /movies/
 
 ### Roles
 - Casting Assistant
 has following permissions for actions.
-1. get:movies, get:actors, get:casting
+1. get:movies, get:actors
 
 - Casting Director
 has following permissions for actions.
-1. get:movies, get:actors, get:casting
-2. post:actors, post:casting
-3. patch:movies, patch:actors, patch:casting
-4. delete:actors, delete:casting
+1. get:movies, get:actors
+2. post:actors, delete:actors
+3. patch:movies, patch:actors
+
 
 - Executive Producer
 has following permissions for actions.
-1. get:movies, get:actors, get:casting
-2. post:movies, post:actors, post:casting
-3. patch:movies, patch:actors, patch:casting
-4. delete:actors, delete:actors, delete:casting
+1. get:movies, get:actors
+2. post:movies, post:actors
+3. patch:movies, patch:actors
+4. delete:movies, delete:actors
 <<<<<<< HEAD
 =======
 
