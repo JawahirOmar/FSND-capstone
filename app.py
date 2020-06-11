@@ -2,23 +2,22 @@ import os
 from flask import Flask, request, abort, jsonify
 from flask_sqlalchemy import SQLAlchemy
 from flask_cors import CORS
-from models import db, setup_db, Movie, Actor
+from models import setup_db, Movie, Actor, db
 from auth import AuthError, requires_auth
 
 
 def create_app(test_config=None):
-    # create and configure the app
+    """Create and configure the app."""
     app = Flask(__name__)
     setup_db(app)
     CORS(app, resource={r"/api.*": {"origin": "*"}})
 
-    # CORS Headers
     @app.after_request
     def after_request(response):
-        response.headers.add('Access-Control-Allow-Headers',
+        response.headers.add('Access-Control-Allow_Headers',
                              'Content-Type,Authorization,true')
-        response.headers.add('Access-Control-Allow-Methods',
-                             'GET,PUT,POST,DELETE,OPTIONS')
+        response.headers.add('Access-Contorl-Allow_Methods',
+                             'GET,POST,PATCH,DELETE')
         return response
 
 
@@ -189,33 +188,53 @@ def create_app(test_config=None):
 
 
     # Error Handling
-    @app.errorhandler(404)
-    def notfound(error):
+    @app.errorhandler(400)
+    def bad_request(error):
         return jsonify({
-            "success": False,
-            "error": 404,
-            "message": "resource_not_found"
-        })
+            'message': 'Bad Request',
+            'success': False
+        }), 400
+
+    @app.errorhandler(401)
+    def unauthorized(error):
+        return jsonify({
+            'message': 'Unauthorized',
+            'success': False
+        }), 401
+
+    @app.errorhandler(404)
+    def not_found(error):
+        return jsonify({
+            'message': 'Not Found',
+            'success': False
+        }), 404
+
+    @app.errorhandler(405)
+    def not_allowed(error):
+        return jsonify({
+            'message': 'Method Not Allowed',
+            'success': False
+        }), 405
 
     @app.errorhandler(422)
     def unprocessable(error):
         return jsonify({
-            "success": False,
-            "error": 422,
-            "message": "unprocessable"
+            'message': 'Unprocessable Entity',
+            'success': False
         }), 422
 
-    @app.errorhandler(400)
-    def bad_request(error):
+    @app.errorhandler(500)
+    def server_error(error):
         return jsonify({
-            "success": False,
-            "error": 400,
-            "message": "Bad Request"
-        })
+            'message': 'Server Error',
+            'success': False
+        }), 500
 
     @app.errorhandler(AuthError)
-    def auth_error(error):
-        return jsonify(error.error), error.status_code
+    def handle_auth_error(ex):
+        response = jsonify(ex.error)
+        response.status_code = ex.status_code
+        return response
 
     return app
 

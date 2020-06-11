@@ -4,7 +4,7 @@ import unittest
 from flask_sqlalchemy import SQLAlchemy
 from datetime import date
 from app import create_app
-from models import Movie, Actor
+from models import Movie, Actor 
 import datetime
 
 class TriviaTestCase(unittest.TestCase):
