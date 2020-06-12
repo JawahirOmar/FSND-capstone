@@ -8,6 +8,7 @@ from urllib.request import urlopen
 AUTH0_DOMAIN = 'fsnd-agency.auth0.com'
 ALGORITHMS = ['RS256']
 API_AUDIENCE = 'agency'
+# API_AUDIENCE = 'http://localhost:5000'
 
 # AuthError Exception
 

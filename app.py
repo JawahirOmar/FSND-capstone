@@ -1,8 +1,10 @@
 import os
+import json
 from flask import Flask, request, abort, jsonify
 from flask_sqlalchemy import SQLAlchemy
 from flask_cors import CORS
 from flask_migrate import Migrate
+from sqlalchemy import exc
 from models import Movie, Actor, db
 from auth import AuthError, requires_auth
 
@@ -42,16 +44,19 @@ def create_app(test_config=None):
     @app.route('/movies', methods=['GET'])
     @requires_auth('get:movies')
     def get_movie(jwt):
-        selection = Movie.query.order_by(Movie.id).all()
-        if movies is None:
-            abort(404, 'There is no movie data.')
+     try:
+        movies = Movie.query.order_by(Movie.id).all()
+        if len(movies) == 0:
+            abort(404)
 
-        movies = [m.format() for m in selection]
+        movies_formatted = [m.format() for m in movies]
         return jsonify({
             'success': True,
-            'movies': movies,
-            'total_movies': len(movies)
-        })
+            'movies': movies_formatted
+    }),200
+
+     except Exception:
+        abort(422)
 
     # POST /movies
     @app.route('/movies', methods=['POST'])
@@ -259,4 +264,4 @@ app = create_app()
 
 
 if __name__ == '__main__':
-    app.run()
+    app.run(host='0.0.0.0', port=8080, debug=True)
