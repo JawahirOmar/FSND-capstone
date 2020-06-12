@@ -100,11 +100,11 @@ def create_app(test_config=None):
         movie.delete()
 
         selection = Movie.query.order_by(Movie.id).all()
-        movies = [m.format() for m in selection]
+        movies_formatted = [m.format() for m in selection]
 
         return jsonify({
             'success': True,
-            'movies': movies,
+            'movies': movies_formatted,
             'deleted': movie.id
         })
 
