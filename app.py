@@ -11,7 +11,7 @@ from auth import AuthError, requires_auth
 
 database_path = os.environ.get('DATABASE_URL')
 default_path = 'postgresql://postgres:90@localhost:5432/agency'
-
+# database_path = os.environ['DATABASE_URL']
 database_path = os.getenv('DATABASE_URL', default_path)
 
 migrate = Migrate()
