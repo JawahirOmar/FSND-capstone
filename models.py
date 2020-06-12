@@ -25,6 +25,7 @@ def setup_db(app, database_path=database_path):
     migrate = Migrate(app, db)
     db.app = app
     db.init_app(app)
+    db.create_all()
 
 
 class Movie(db.Model):
