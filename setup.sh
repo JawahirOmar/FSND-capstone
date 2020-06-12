@@ -1,6 +1,7 @@
-export AUTH0_DOMAIN='capstone-j.auth0.com'
-export AUTH0_CLIENTID='4goHvlX7RTXStW1uBtwkMeD251mmKBG3'
-export API_AUDIENCE='movie'
+export AUTH0_DOMAIN='fsnd-agency.auth0.com'
+export AUTH0_CLIENTID='GP57toLUCc8yq0aDFrf0ekn6TvYRuWxS'
+export API_AUDIENCE='agency'
+export ALGORITHMS=['RS256']
 export FLASK_APP=app.py
 export FLASK_DEBUG=true
 flask run --reload
