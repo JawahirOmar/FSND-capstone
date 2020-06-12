@@ -4,12 +4,9 @@ from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
 import json
 
-database_path = os.environ.get('DATABASE_URL')
-default_path = 'postgresql://postgres:90@127.0.0.1:5432/agency'
 
-database_path = os.getenv('DATABASE_URL', default_path)
-
-
+database_name = "capstone"
+database_path = "postgres://{}:{}@{}/{}".format('postgres', '90', 'localhost:5432', database_name)
 db = SQLAlchemy()
 
 '''
@@ -17,13 +14,13 @@ setup_db(app)
     binds a flask application and a SQLAlchemy service
 '''
 
-# def setup_db(app, database_path=database_path):
-#     app.config["SQLALCHEMY_DATABASE_URI"] = database_path
-#     app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
-#     migrate = Migrate(app, db)
-#     db.app = app
-#     db.init_app(app)
-#     db.create_all()
+def setup_db(app, database_path=database_path):
+    app.config["SQLALCHEMY_DATABASE_URI"] = database_path
+    app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
+    migrate = Migrate(app, db)
+    db.app = app
+    db.init_app(app)
+    db.create_all()
 
 
 class Movie(db.Model):
