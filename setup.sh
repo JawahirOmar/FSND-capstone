@@ -1,4 +1,4 @@
-export DATABASE_URL = 'postgresql://postgres:1234@localhost:5432/agency'
+export DATABASE_URL = 'postgresql://postgres:90@127.0.0.1:5432/agency'
 export AUTH0_DOMAIN='fsnd-agency.auth0.com'
 export AUTH0_CLIENTID='GP57toLUCc8yq0aDFrf0ekn6TvYRuWxS'
 export API_AUDIENCE='agency'
