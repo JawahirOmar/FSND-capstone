@@ -5,19 +5,14 @@ The Project is the backend of a Casting Agency Company that hires actors and pro
 
 There are different roles with different permissions for people who work in the agency.
 
-The Project Contains:
+## Motivations & Covered Topics
+By completing this project, I learn and apply my skills on :
 
-Database modeling with PostgreSQL & SQLAlchemy
-APIs to performance CRUD Operations on database with Flask
-Automated testing with Unittest
-Automatad testing with Postman
-Authorization & Role based authentication control with Auth0
-Web server deployment on Heroku
-
-## Heroku Link
-```
-https://agency-fsnd.herokuapp.com/
-  ```
+- Database modeling with postgres & sqlalchemy (see models.py)
+- API to performance CRUD Operations on database with Flask (see app.py)
+- Automated testing with Unittest (see test_app)
+- Authorization RBAC with Auth0 (see auth.py)
+- Deployment on Heroku
 
 ## Getting Started
 nstalling Dependencies
@@ -51,13 +46,13 @@ flask run --reload
   ```
 The --reload flag will detect file changes and restart the server automatically.
 
-## Casting Agency Specification
 
-The Casting Agency models a company that is responsible for creating movies and managing and assigning actors to those movies. You are an Executive Producer within the company and are creating a system to simplify and streamline your process.
+## API Reference
 
-### Data Models
-- Movies with attributes title and release date
-- Actors with attributes name, age and gender
+## Heroku Link
+```
+https://agency-fsnd.herokuapp.com/
+  ```
 
 ### Endpoints
 - GET /actors and /movies
@@ -76,14 +71,12 @@ has following permissions for actions.
   - post:actors, delete:actors
   - patch:movies, patch:actors
 
-
 - Executive Producer
 has following permissions for actions.
   - get:movies, get:actors
   - post:movies, post:actors
   - patch:movies, patch:actors
   - delete:movies, delete:actors
-
 
 ## Authentication (bearer tokens)
 
@@ -130,3 +123,24 @@ The API will return seven error types when requests fail:
 - 405: Method Not Allowed
 - 422: Not Processable
 - 500: Internal Sever Error
+
+1. GET /movies
+- Return success value and list of movies.
+
+2. POST /movies
+- Create a new movie using the submitted title, release date. Return success value, list of movies and number of movies.
+
+3. PATCH /movies
+- Update the movie of the given ID if it exists using the title, release_date. Return success value, list of movies, number of movies and id of updated movie.
+
+4. DELETE /movies
+- Deletes the movie of the given ID if it exists. Return success value, remaining movies list, deleted movie id.
+
+5. GET /actors
+- Return success value, list of actors and number of actors.
+
+6. POST /actors
+- Create a new actor using the submitted name, age, and gender. Return success value, list of actors and number of actors. 
+
+7. DELETE /actors
+- Deletes the actor of the given ID if it exists. Return success value, remaining actors list, deleted actor id.
