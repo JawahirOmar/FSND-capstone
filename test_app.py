@@ -4,8 +4,9 @@ import unittest
 from flask_sqlalchemy import SQLAlchemy
 from datetime import date
 from app import create_app
-from models import Movie, Actor 
+from models import Movie, Actor
 import datetime
+
 
 class TriviaTestCase(unittest.TestCase):
     """This class represents the trivia test case"""
@@ -55,10 +56,10 @@ class TriviaTestCase(unittest.TestCase):
         """Executed after reach test"""
         pass
 
-
     # GET Movie
     def test_get_movies_error(self):
-        res = self.client().get('/movies', headers={"Authorization": "Bearer {}".format(self.casting_assistant)})
+        res = self.client().get('/movies', headers={
+            "Authorization": "Bearer {}".format(self.casting_assistant)})
         data = json.loads(res.data)
 
         self.assertEqual(res.status_code, 200)
@@ -69,13 +70,15 @@ class TriviaTestCase(unittest.TestCase):
         data = json.loads(res.data)
 
         self.assertEqual(res.status_code, 401)
-        self.assertEqual(data['code'], 'authorization_header_missing')
-        self.assertEqual(data['description'], 'Authorization header is expected.')    
+        self.assertEqual(
+            data['code'], 'authorization_header_missing')
+        self.assertEqual(
+            data['description'], 'Authorization header is expected.')
 
- 
     # POST Movie
     def test_post_movies_success(self):
-        res = self.client().post('/movies', headers={"Authorization": "Bearer {}".format(self.executive_producer)})
+        res = self.client().post('/movies', headers={
+            "Authorization": "Bearer {}".format(self.executive_producer)})
         data = json.loads(res.data)
 
         self.assertEqual(res.status_code, 200)
@@ -83,16 +86,18 @@ class TriviaTestCase(unittest.TestCase):
         self.assertTrue(data['total_movies'] > 1)
 
     def tes_post_movies_error(self):
-        res = self.client().get('/movies', headers={"Authorization": "Bearer {}".format(self.casting_assistant)})  
+        res = self.client().get('/movies', headers={
+            "Authorization": "Bearer {}".format(self.casting_assistant)})
         data = json.loads(res.data)
 
-        self.assertEqual(res.status_code, 401) 
+        self.assertEqual(res.status_code, 401)
         self.assertTrue(data['code'], 'unauthorized')
         self.assertTrue(['description'], 'Permision Not Found.')
 
-    # DELETE Movie 
+    # DELETE Movie
     def test_delete_movies_success(self):
-        res = self.client().get('/movies/10', headers={"Authorization": "Bearer {}".format(self.executive_producer)})
+        res = self.client().get('/movies/10', headers={
+            "Authorization": "Bearer {}".format(self.executive_producer)})
         data = json.loads(res.data)
         movie = Movie.query.get(10)
 
@@ -101,35 +106,40 @@ class TriviaTestCase(unittest.TestCase):
         self.assertTrue(data['deleted_movie'], 10)
         self.assertIsNone(movie)
 
-
     def test_delete_movies_error(self):
-        res = json.client().get('/movies/700', headers={"Authorization": "Bearer {}".format(self.executive_producer)})  
+        res = json.client().get('/movies/700', headers={
+            "Authorization": "Bearer {}".format(self.executive_producer)})
         data = json.loads(res.data)
-        movie = Movie.query.get(700)  
+        movie = Movie.query.get(700)
 
         self.assertEqual(res.status_code, 404)
         self.assertFalse(data['success'])
         self.assertEqual(data['message'], 'resource not found')
 
-    # PATCH Movie  
+    # PATCH Movie
     def test_update_movies_success(self):
-        res = self.client().patch('/movies/5',headers={"Authorization": "Bearer {}".format(self.casting_director)}, json=self.update_movie)
+        res = self.client().patch('/movies/5', headers={
+            "Authorization": "Bearer {}"
+            .format(self.casting_director)}, json=self.update_movie)
         data = json.loads(res.data)
 
         self.assertEqual(res.status_code, 200)
         self.assertEqual(data['success'], True)
 
     def test_update_movies_error(self):
-        res = self.client().patch('/movies/5',headers={"Authorization": "Bearer {}".format(self.casting_assistant)}, json=self.update_movie)
+        res = self.client().patch('/movies/5', headers={
+            "Authorization": "Bearer {}"
+            .format(self.casting_assistant)}, json=self.update_movie)
         data = json.loads(res.data)
 
         self.assertEqual(res.status_code, 401)
         self.assertEqual(data['code'], 'unauthorized')
         self.assertEqual(data['description'], 'Permission not found.')
-    
+
     # GET Actor
     def test_get_actors_success(self):
-        res = self.client().get('/actors',headers={"Authorization": "Bearer {}".format(self.casting_assistant)})
+        res = self.client().get('/actors', headers={
+            "Authorization": "Bearer {}".format(self.casting_assistant)})
         data = json.loads(res.data)
 
         self.assertEqual(res.status_code, 200)
@@ -140,31 +150,35 @@ class TriviaTestCase(unittest.TestCase):
         data = json.loads(res.data)
 
         self.assertEqual(res.status_code, 401)
-        self.assertEqual(data['code'], 'authorization_header_missing')
-        self.assertEqual(data['description'], 'Authorization header is expected.')    
-   
+        self.assertEqual(
+            data['code'], 'authorization_header_missing')
+        self.assertEqual(
+            data['description'], 'Authorization header is expected.')
 
     # POST Actor
     def test_post_new_actors_succes(self):
-        res = self.client().post('/actors',headers={"Authorization": "Bearer {}".format(self.executive_producer)}, json=self.new_actor)
+        res = self.client().post('/actors', headers={
+            "Authorization": "Bearer {}"
+            .format(self.executive_producer)}, json=self.new_actor)
         data = json.loads(res.data)
 
         self.assertEqual(res.status_code, 200)
         self.assertEqual(data['success'], True)
 
     def test_post_actor_error(self):
-        res = self.client().post('/actors', headers={"Authorization": "Bearer {}".format(self.casting_assistant)}, json=self.new_actor)
+        res = self.client().post('/actors', headers={
+            "Authorization": "Bearer {}"
+            .format(self.casting_assistant)}, json=self.new_actor)
         data = json.loads(res.data)
 
         self.assertEqual(res.status_code, 401)
         self.assertEqual(data['code'], 'unauthorized')
-        self.assertEqual(data['description'], 'Permission not found.') 
+        self.assertEqual(data['description'], 'Permission not found.')
 
-
-
-    # DELETE Actor 
+    # DELETE Actor
     def test_delete_actors_success(self):
-        res = self.client().get('/actors/3', headers={"Authorization": "Bearer {}".format(self.casting_director)})
+        res = self.client().get('/actors/3', headers={
+            "Authorization": "Bearer {}".format(self.casting_director)})
         data = json.loads(res.data)
         movie = Movie.query.get(3)
 
@@ -174,10 +188,10 @@ class TriviaTestCase(unittest.TestCase):
         self.assertIsNone(movie)
 
     def test_delete_actors_error(self):
-        res = self.client().delete('/actors/1', headers={"Authorization": "Bearer {}".format(self.casting_assistant)})
+        res = self.client().delete('/actors/1', headers={
+            "Authorization": "Bearer {}".format(self.casting_assistant)})
         data = json.loads(res.data)
 
         self.assertEqual(res.status_code, 401)
         self.assertEqual(data['code'], 'unauthorized')
         self.assertEqual(data['description'], 'Permission not found')
-

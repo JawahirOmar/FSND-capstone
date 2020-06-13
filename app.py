@@ -13,7 +13,6 @@ database_path = os.environ.get('DATABASE_URL')
 default_path = 'postgresql://postgres:90@localhost:5432/agency'
 # database_path = os.environ['DATABASE_URL']
 database_path = os.getenv('DATABASE_URL', default_path)
-
 migrate = Migrate()
 
 
@@ -29,34 +28,33 @@ def create_app(test_config=None):
 
     @app.after_request
     def after_request(response):
-        response.headers.add('Access-Control-Allow_Headers',
-                             'Content-Type,Authorization,true')
-        response.headers.add('Access-Contorl-Allow_Methods',
-                             'GET,POST,PATCH,DELETE')
+        response.headers.add(
+            'Access-Control-Allow_Headers', 'Content-Type,Authorization,true')
+        response.headers.add(
+            'Access-Contorl-Allow_Methods', 'GET,POST,PATCH,DELETE')
         return response
-
 
     @app.route('/', methods=['GET'])
     def welcome():
         return jsonify("Welcome to my app")
 
-   # GET /movies
+    # GET /movies
     @app.route('/movies', methods=['GET'])
     @requires_auth('get:movies')
     def get_movie(jwt):
-     try:
-        movies = Movie.query.order_by(Movie.id).all()
-        if len(movies) == 0:
-            abort(404)
+        try:
+            movies = Movie.query.order_by(Movie.id).all()
+            if len(movies) == 0:
+                abort(404)
 
-        movies_formatted = [m.format() for m in movies]
-        return jsonify({
-            'success': True,
-            'movies': movies_formatted
-    }),200
+            movies_formatted = [m.format() for m in movies]
+            return jsonify({
+                'success': True,
+                'movies': movies_formatted
+            }), 200
 
-     except Exception:
-        abort(422)
+        except Exception:
+            abort(422)
 
     # POST /movies
     @app.route('/movies', methods=['POST'])
@@ -139,9 +137,6 @@ def create_app(test_config=None):
         else:
             abort(400)
 
-
-
-
     # GET/actors
     @app.route('/actors', methods=['GET'])
     @requires_auth('get:actors')
@@ -174,9 +169,7 @@ def create_app(test_config=None):
             age = new_actors['age']
             gender = new_actors['gender']
             actors = Actor(name=name, age=age, gender=gender)
-
             actors.insert()
-            
             selection = Actor.query.order_by(Actor.id).all()
             actors = [d.format() for d in selection]
 
@@ -206,8 +199,6 @@ def create_app(test_config=None):
             'actors': actors,
             'deleted': actors.id
         })
-
-
 
     # Error Handling
     @app.errorhandler(400)
@@ -260,8 +251,8 @@ def create_app(test_config=None):
 
     return app
 
-app = create_app()
 
+app = create_app()
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=8080, debug=True)
